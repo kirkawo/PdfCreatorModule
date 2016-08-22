@@ -72,5 +72,12 @@ namespace AppWeb.Controllers
             
             return PhysicalFile(file_path, file_type, returnedName);
         }
+
+        public IActionResult CleanPdfField()
+        {
+            _generator = new PdfCreator("");
+            _generator.CleanFolder(_path);
+            return RedirectToAction("Index");
+        }
     }
 }

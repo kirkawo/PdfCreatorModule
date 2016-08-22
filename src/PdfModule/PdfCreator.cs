@@ -84,7 +84,7 @@ namespace PdfModule
         /// Cleans the directory that contains the files .pdf
         /// </summary>
         /// <param name="sourceDirectory">It contains the address of the directory with the files to clean</param>
-        public void ClearFolder(string sourceDirectory)
+        public void CleanFolder(string sourceDirectory)
         {
             try
             {

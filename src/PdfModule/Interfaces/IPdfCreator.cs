@@ -9,6 +9,6 @@ namespace PdfModule.Interfaces
     public interface IPdfCreator
     {
         void CreatePdf(Object obj, out string fileName);
-        void ClearFolder(string sourceDirectory);
+        void CleanFolder(string sourceDirectory);
     }
 }

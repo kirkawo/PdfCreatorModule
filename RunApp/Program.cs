@@ -4,8 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using PdfModule;
 using PdfMock;
-using System.Reflection;
-using BitMiracle.Docotic.Pdf;
 
 namespace RunApp
 {
@@ -13,9 +11,9 @@ namespace RunApp
     {
         static MockModel _model = new MockModel
         {
-            Sender = "asdasdasd",
-            Recepient = "dsfsdfdsfdsf",
-            Message = "sdfsdfsdfsdfsdfs dfsdfsdfsdfdfsdfwrw ersdfwefsdf w efs fwefs dfwefdfwer"
+            Sender = "Jon Dou",
+            Recepient = "Alexey Stupakov",
+            Message = "Some order to do. Do it better"
         };
         public static void Main(string[] args)
         {
@@ -23,7 +21,7 @@ namespace RunApp
             PdfCreator crt = new PdfCreator("temp/");
             crt.CreatePdf(_model, out tmp);
 
-            crt.ClearFolder(@"temp/");
+            crt.CleanFolder(@"temp/");
            
         }
     }
