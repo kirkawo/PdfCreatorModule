@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace PdfModule.Interfaces
 {
-    public interface IPdfCreator
+    public interface IPdfCreator<T> where T : class
     {
-        void CreatePdf(Object obj, out string fileName, Enum fSize);
+        void CreatePdf(T model, out string fileName, Enum fontSize);
         void CleanFolder(string sourceDirectory);
     }
 }

@@ -27,7 +27,7 @@ namespace WebApp.Controllers
             _model = new MockModel
             {
                 Sender = "KirkAwo",
-                Recepient = "Alexey Stupakov",
+                Recepient = "Jon Dou",
                 Message = "Some order to do. Do it better So Soapy left his seat, and walked slowly along the street."
                 +" Soon he came to a bright restaurant on Broadway.Ah!This was all right.He just had to get to a table in the restaurant and sit down.That was all"
             };
@@ -61,8 +61,8 @@ namespace WebApp.Controllers
 
         public IActionResult GetFile()
         {
-            _generator = new PdfCreator<MockModel>(_model, _path);
-            _generator.CreatePdf(out returnedName, FontSize.Fourteen);
+            _generator = new PdfCreator<MockModel>( _path);
+            _generator.CreatePdf(_model, out returnedName, FontSize.Fourteen);
 
 
             string file_path = Path.Combine(_appEnvironment.ContentRootPath, "PdfTemp/" + returnedName);
