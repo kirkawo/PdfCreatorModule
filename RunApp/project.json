@@ -5,14 +5,19 @@
   },
 
   "dependencies": {
+    "Apitron.PDF.Kit": "1.0.41",
+    "BitMiracle.Docotic.Pdf": "4.9.7877-dev",
+    "EvoHtmlToPdf_NetCore_Client": "6.16.0",
     "Microsoft.NETCore.App": {
       "type": "platform",
       "version": "1.0.0"
     },
+    "NReco.PdfGenerator.LT": "1.1.13",
     "PdfMock": "1.0.0-*",
     "PdfModule": "1.0.0-*",
-    "System.Reflection.TypeExtensions": "4.1.0"
-  },
+    "System.Collections.Specialized": "4.0.1",
+    "System.Reflection.TypeExtensions": "4.1.0",
+    "WnvHtmlToPdf_NetCore_Client": "12.16.0" },
 
   "frameworks": {
     "netcoreapp1.0": {

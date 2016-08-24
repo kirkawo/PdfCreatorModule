@@ -17,6 +17,7 @@ namespace PdfModule
     {
         private static int PointOne = 70;
         private static int PointTwo = 70;
+        private static int LinePoint = 82;
         private static string pathToFile;
         private static string _fileName;
         private static string _path;
@@ -60,13 +61,24 @@ namespace PdfModule
             using (PdfDocument pdf = new PdfDocument())
             {
                 PdfCanvas canvas = pdf.Pages[0].Canvas;
-                canvas.FontSize = 10;
-                
+                canvas.FontSize = 11;
+
+                canvas.SaveState();
+                canvas.Brush.Color = new PdfGrayColor(50);
+
+                canvas.CurrentPosition = new PdfPoint(110, 70);
+                canvas.DrawLineTo(110, 800);
+
                 for (int i = 0; i < props.Length; i++)
                 {                    
                     canvas.DrawText(props[i].Name, new PdfRectangle(20, PointOne, 100, 100), PdfTextAlign.Left, PdfVerticalAlign.Top);
-                    PointOne = PointOne + 10;
+                    canvas.CurrentPosition = new PdfPoint(20, LinePoint);
+                    canvas.DrawLineTo(100, LinePoint);
+                    LinePoint = LinePoint + 14;
+                    PointOne = PointOne + 14;
                 }
+
+                canvas.RestoreState();
 
                 foreach (var prop in props)
                 {
@@ -74,7 +86,7 @@ namespace PdfModule
 
                     canvas.TextHorizontalScaling = 70;
                     canvas.DrawText(item, new PdfRectangle(120, PointTwo, 400, 400), PdfTextAlign.Left, PdfVerticalAlign.Top);
-                    PointTwo = PointTwo + 10;
+                    PointTwo = PointTwo + 14;
                 }
                 
                 pdf.Save(pathToFile);
