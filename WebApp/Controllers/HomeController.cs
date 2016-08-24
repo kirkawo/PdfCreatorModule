@@ -28,7 +28,8 @@ namespace WebApp.Controllers
             {
                 Sender = "KirkAwo",
                 Recepient = "Alexey Stupakov",
-                Message = "Do please some thing good!!!"
+                Message = "Some order to do. Do it better So Soapy left his seat, and walked slowly along the street."
+                +" Soon he came to a bright restaurant on Broadway.Ah!This was all right.He just had to get to a table in the restaurant and sit down.That was all"
             };
 
             _modelNull = new MockModel();
