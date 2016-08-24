@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using PdfModule;
 using PdfMock;
-using System.Threading;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using PdfModule;
 
-namespace AppWeb.Controllers
+namespace WebApp.Controllers
 {
     public class HomeController : Controller
     {
@@ -17,7 +16,7 @@ namespace AppWeb.Controllers
         private static MockModel _modelNull;
         private readonly string _path = @"pdftemp/";
         private string returnedName;
-        private PdfCreator _generator;
+        private PdfCreator<MockModel> _generator;
 
         private readonly IHostingEnvironment _appEnvironment;
 
@@ -33,7 +32,6 @@ namespace AppWeb.Controllers
             };
 
             _modelNull = new MockModel();
-
         }
 
         public IActionResult Index()
@@ -62,22 +60,23 @@ namespace AppWeb.Controllers
 
         public IActionResult GetFile()
         {
-            _generator = new PdfCreator(_path);
-            _generator.CreatePdf(_model, out returnedName);
+            _generator = new PdfCreator<MockModel>(_model, _path);
+            _generator.CreatePdf(out returnedName, FontSize.Fourteen);
 
-            
+
             string file_path = Path.Combine(_appEnvironment.ContentRootPath, "PdfTemp/" + returnedName);
-            
+
             string file_type = "application/pdf";
-            
+
             return PhysicalFile(file_path, file_type, returnedName);
         }
 
         public IActionResult CleanPdfField()
         {
-            _generator = new PdfCreator("");
+            _generator = new PdfCreator<MockModel>("");
             _generator.CleanFolder(_path);
             return RedirectToAction("Index");
         }
+
     }
 }

@@ -8,7 +8,7 @@ namespace PdfModule.Interfaces
 {
     public interface IPdfCreator
     {
-        void CreatePdf(Object obj, out string fileName);
+        void CreatePdf(Object obj, out string fileName, Enum fSize);
         void CleanFolder(string sourceDirectory);
     }
 }
