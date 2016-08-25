@@ -74,7 +74,7 @@ namespace PdfModule
         /// <param name="style">It is string value for customise HTML file that will be create.</param>
         public HtmlToPdfCreator(T model, string path, string style) : this (model, path)
         {
-            if (!String.IsNullOrEmpty(style) & String.IsNullOrWhiteSpace(style))
+            if (!String.IsNullOrEmpty(style) & !String.IsNullOrWhiteSpace(style))
                 _StyleCss = style;
             else
                 _StyleCss = _defaultTableCssCells;
@@ -152,7 +152,7 @@ namespace PdfModule
         /// </summary>
         /// <param name="content">Taking IHtmlContent object (TagBuilder object)</param>
         /// <returns>Return string value of IHtmlContent object</returns>
-        public static string GetHtmlToString(IHtmlContent content)
+        public string GetHtmlToString(IHtmlContent content)
         {
             var writer = new System.IO.StringWriter();
             content.WriteTo(writer, HtmlEncoder.Default);

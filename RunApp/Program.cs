@@ -14,7 +14,8 @@ namespace RunApp
         };
         public static void Main(string[] args)
         {
-
+            HtmlToPdfCreator<MockModel> tst = new HtmlToPdfCreator<MockModel>(_model);
+            tst.SaveToFolder();
         }
     }
 }
