@@ -53,7 +53,7 @@ namespace PdfModule
             _fileName = _type.Name + "(" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm") + ")" + ".pdf";
             fileName = _fileName;
 
-            if (String.IsNullOrWhiteSpace(_path))
+            if (String.IsNullOrWhiteSpace(_path) & String.IsNullOrWhiteSpace(_path))
             {
                 pathToFile = _fileName;
             }

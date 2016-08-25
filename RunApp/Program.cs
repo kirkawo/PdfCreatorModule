@@ -6,6 +6,7 @@ namespace RunApp
 {
     public class Program
     {
+        static string tmp;
         static MockModel _model = new MockModel
         {
             Sender = "Jon Dou",
@@ -14,8 +15,8 @@ namespace RunApp
         };
         public static void Main(string[] args)
         {
-            HtmlToPdfCreator<MockModel> tst = new HtmlToPdfCreator<MockModel>(_model);
-            tst.SaveToFolder();
+            PdfCreator<MockModel> tst = new PdfCreator<MockModel>("");
+            tst.CreatePdf(_model, out tmp, FontSize.Eleven);
         }
     }
 }
