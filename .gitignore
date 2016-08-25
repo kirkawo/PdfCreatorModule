@@ -244,3 +244,6 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 /RunApp/Tables.pdf
+/RunApp/ HTML-Template(2016-08-25-13-59).html
+/RunApp/ HTML-Template(2016-08-25-14-00).html
+/RunApp/Temp/HTML-Template(2016-08-25-14-02).html

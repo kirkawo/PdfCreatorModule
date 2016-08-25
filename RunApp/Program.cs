@@ -10,15 +10,11 @@ namespace RunApp
         {
             Sender = "Jon Dou",
             Recepient = "Body tail",
-            Message = "Some order to do. Do it better So Soapy left his seat, and walked slowly along the street.Soon he came to a bright restaurant on Broadway.Ah!This was all right.He just had to get to a table in the restaurant and sit down.That was all"
+            Message = "Some order to do. Do it better So Soapy left his seat, and walked slowly along the street.Soon he came to a bright restaurant on Broadway."
         };
         public static void Main(string[] args)
         {
-            string tmp;
-            PdfCreator<MockModel> crt = new PdfCreator<MockModel>("temp/");
-            crt.CreatePdf(_model, out tmp, FontSize.Fourteen);
-            
-            //crt.CleanFolder(@"temp/");
+
         }
     }
 }

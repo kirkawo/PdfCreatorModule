@@ -12,50 +12,108 @@ using System.Text.Encodings.Web;
 
 namespace PdfModule
 {
-    public class HtmlToPdfCreator<T> /* :  IHtmlToPdfCreator<T>*/
+    /// <summary>
+    /// Can convert entity to PDF data format with using Html to pdf.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class HtmlToPdfCreator<T> : IHtmlToPdfCreator<T> where T : class
     {
         private static T _model;
         private static Type _type;
         private static PropertyInfo[] _propInfo;
-        private TagBuilder _body;
-        private string _tmp;
+        private static TagBuilder _html;
+        private static string _path;
+        private static string _fileName = "HTML-Template" + "(" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm") + ")" + ".html";
+        private string _StyleCss;
 
-        public string ReturnString
-        {
-            get { return _tmp; }
-        }
+        /// <summary>
+        /// 
+        /// </summary>
+        private static string _defaultTableCssCells =
+            "table {font-family: \"Lucida Sans Unicode\", \"Lucida Grande\", Sans-Serif; text-align: left; border-collapse: separate; border-spacing: 2px; background: #BDBDBD; color: #212121; border: 30px solid #BDBDBD; border-radius: 60px;}"
+            + "th {font-size: 18px; padding: 12px;}"
+            + "td {background: #E0E0E0; padding: 11px;}";
 
+        /// <summary>
+        /// Ctor that taking entity model
+        /// </summary>
+        /// <param name="model">Entity to convert.</param>
+        /// <exception cref="ArgumentNullException">Thrown when entity is null</exception>
         public HtmlToPdfCreator(T model)
         {
+            if (model == null)
+                throw new ArgumentNullException($"Object instance is equal null. Can't write data.");
+
             _model = model;
             _type = _model.GetType();
             _propInfo = _type.GetProperties();
+            _StyleCss = _defaultTableCssCells;
+            _path = _fileName;
         }
 
-        public void TestGenerate()
+        /// <summary>
+        /// Ctor that taking entity model and path string where will be saving HTML file.
+        /// </summary>
+        /// <param name="model">Entity to convert.</param>
+        /// <param name="path">It is path where will be created html file without name, only path to folder (Name of HTML file will be create automaticly).</param>
+        public HtmlToPdfCreator(T model, string path) : this (model)
+        {
+            if (!String.IsNullOrEmpty(path) & !String.IsNullOrWhiteSpace(path))
+                _path = path + _fileName;
+            else
+                _path = _fileName;
+
+            _StyleCss = _defaultTableCssCells;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model">Entity to convert.</param>
+        /// <param name="path">It is path where will be created html file without name, only path to folder (Name of HTML file will be create automaticly).</param>
+        /// <param name="style">It is string value for customise HTML file that will be create.</param>
+        public HtmlToPdfCreator(T model, string path, string style) : this (model, path)
+        {
+            if (!String.IsNullOrEmpty(style) & String.IsNullOrWhiteSpace(style))
+                _StyleCss = style;
+            else
+                _StyleCss = _defaultTableCssCells;
+        }
+                
+        /// <summary>
+        /// This is method for saving HTML file
+        /// </summary>
+        public void SaveToFolder()
         {
             EntityToHtml();
         }
-
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tag">It is a value that teking TagBuilder object for create complite HTML file</param>
         private void htmlGenerate(TagBuilder tag)
         {
-            TagBuilder html = new TagBuilder("html");
+            
+            _html = new TagBuilder("html");
             TagBuilder head = new TagBuilder("head");
             TagBuilder title = new TagBuilder("title");
-            _body = new TagBuilder("body");
-
-            html.InnerHtml.AppendHtml(head);
-            html.InnerHtml.AppendHtml(title);
-            html.InnerHtml.AppendHtml(_body);
-            _body.InnerHtml.AppendHtml(tag);
-
-            String content = GetString(html);
-            _tmp = content;
-            System.IO.File.WriteAllText(@"D:\LOOKATME.html", content);
+            TagBuilder body = new TagBuilder("body");
+            TagBuilder style = new TagBuilder("style");
+            style.InnerHtml.AppendHtml(_StyleCss);
+            _html.InnerHtml.AppendHtml(head);
+            _html.InnerHtml.AppendHtml(title);
+            head.InnerHtml.AppendHtml(style);
+            _html.InnerHtml.AppendHtml(body);
+            body.InnerHtml.AppendHtml(tag);
+                        
+            String content = GetHtmlToString(_html);
+            System.IO.File.WriteAllText(_path, content);            
         }
-
-        
-
+                
+        /// <summary>
+        /// This method creating table that containce data of entity to html file
+        /// </summary>
         private void EntityToHtml()
         {
             TagBuilder table = new TagBuilder("table");
@@ -70,7 +128,7 @@ namespace PdfModule
             {
                 string field = (string)_propInfo[i].Name;
                 tdThead.InnerHtml.SetHtmlContent(field);
-                trThead.InnerHtml.AppendHtml(/*tdThead*/GetString(tdThead));
+                trThead.InnerHtml.AppendHtml(GetHtmlToString(tdThead));
             }
             
             thead.InnerHtml.AppendHtml(trThead);
@@ -79,7 +137,7 @@ namespace PdfModule
             {
                 string item = (string)prop.GetValue(_model);
                 tdTbody.InnerHtml.SetContent(item);
-                trTbody.InnerHtml.AppendHtml(GetString(tdTbody));
+                trTbody.InnerHtml.AppendHtml(GetHtmlToString(tdTbody));
             }
             tbody.InnerHtml.AppendHtml(trTbody);
 
@@ -89,32 +147,16 @@ namespace PdfModule
             htmlGenerate(table);
         }
 
-        public static string GetString(IHtmlContent content)
+        /// <summary>
+        /// This method taking IHtmlContent object and genereting string value.
+        /// </summary>
+        /// <param name="content">Taking IHtmlContent object (TagBuilder object)</param>
+        /// <returns>Return string value of IHtmlContent object</returns>
+        public static string GetHtmlToString(IHtmlContent content)
         {
             var writer = new System.IO.StringWriter();
             content.WriteTo(writer, HtmlEncoder.Default);
             return writer.ToString();
         }
-
-        private class MyBufferedHtmlContent : IHtmlContent
-        {
-            internal List<IHtmlContent> Entries { get; } = new List<IHtmlContent>();
-
-            public MyBufferedHtmlContent Append(IHtmlContent htmlContent)
-            {
-                Entries.Add(htmlContent);
-                return this;
-            }
-            
-
-            public void WriteTo(TextWriter writer, System.Text.Encodings.Web.HtmlEncoder encoder)
-            {
-                foreach (var entry in Entries)
-                {
-                    entry.WriteTo(writer, encoder);
-                }
-            }
-        }
-
     }
 }
