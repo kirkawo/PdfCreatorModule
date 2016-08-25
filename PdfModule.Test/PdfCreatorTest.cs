@@ -24,8 +24,7 @@ namespace PdfModule.Test
         };
 
         private static MockModel _modelNull = null;
-        Moq.
-
+      
         #endregion
 
         private PdfCreator<MockModel> pdfCreator;
