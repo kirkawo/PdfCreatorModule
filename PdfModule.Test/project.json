@@ -6,7 +6,8 @@
     "PdfModule": "1.0.0-*",
     "PdfMock": "1.0.0-*",
     "Moq": "4.6.38-alpha",
-    "dotnet-test-xunit": "2.2.0-preview2-build1029"
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "BitMiracle.Docotic.Pdf": "4.9.7889-dev"
   },
     "frameworks": {
         "netcoreapp1.0": {
