@@ -23,16 +23,6 @@ namespace RunApp
         };
         public static void Main(string[] args)
         {
-
-            //PdfCreator<MockModel> tst = new PdfCreator<MockModel>("temp/");
-            //tst.CreatePdf(_model, out tmp, FontSize.Fourteen);
-
-            HtmlToPdfCreator<MockModel> test = new HtmlToPdfCreator<MockModel>(_model, @"CssResources/bootstrap.min.css", "", "", "");
-            test.SaveToFolder();
         }
     }
 }
-
-
-//divPageContainer.AddCssClass("col-md-4 col-md-offset-4");
-//            tag.AddCssClass("table table-striped");   

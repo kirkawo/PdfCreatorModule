@@ -11,6 +11,8 @@ namespace PdfModule.Interfaces
     {
         void SaveToFolder();
         string ReturnHtmlContent();
+        string ReturnNamePdf();
+        byte[] HtmlToPdfByteArray();
         string GetHtmlToString(IHtmlContent content);
         string GetHtml5ToString(IHtmlContent content);
     }

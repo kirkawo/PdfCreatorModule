@@ -25,7 +25,7 @@ namespace PdfModule
         private static TagBuilder _html;
         private static string _path;
         private static string _pathToBootstrap;
-        private static string _fileName = "HTML-Template" + "(" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm") + ")" + ".html";
+        private static string _fileName = "HTML-Template" + "(" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm") + ")";
         private static string _column;
         private static string _tableCss;
         private static string _returnContent;
@@ -59,9 +59,9 @@ namespace PdfModule
         public HtmlToPdfCreator(T model, string path) : this(model)
         {
             if (!String.IsNullOrEmpty(path) & !String.IsNullOrWhiteSpace(path))
-                _path = path + _fileName;
+                _path = path + _fileName + ".html";
             else
-                _path = _fileName;
+                _path = _fileName + ".html";
         }
 
         /// <summary>
@@ -202,6 +202,10 @@ namespace PdfModule
             return "<!DOCTYPE HTML>" + writer.ToString();
         }
 
+        /// <summary>
+        /// This method is returns byte arrey containce pdf file
+        /// </summary>
+        /// <returns>Returns byte array than contains bytes of PDF file</returns>
         public byte[] HtmlToPdfByteArray()
         {
             EntityToHtml();
@@ -221,6 +225,24 @@ namespace PdfModule
                 array = stream.ToArray();
             }
             return array;
+        }
+
+        /// <summary>
+        /// This method is returns byte arrey containce pdf file async.
+        /// </summary>
+        /// <returns>Task with byte array result.</returns>
+        public async Task<byte[]> HtmlToPdfByteArrayAsync()
+        {
+            return await Task.Run(() => HtmlToPdfByteArray());
+        }
+
+        /// <summary>
+        /// This method returns name of pdf file
+        /// </summary>
+        /// <returns>Returns name of pdf file in string</returns>
+        public string ReturnNamePdf()
+        {
+            return _fileName + ".pdf";
         }
     }
 }

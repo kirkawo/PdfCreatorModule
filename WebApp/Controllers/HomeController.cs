@@ -87,7 +87,7 @@ namespace WebApp.Controllers
         {
             _htmlToPdf = new HtmlToPdfCreator<MockModel>(_model);
                         
-            return File(_htmlToPdf.HtmlToPdfByteArray(), "application/pdf", "MyPdfFile.pdf");                    
+            return File(_htmlToPdf.HtmlToPdfByteArray(), "application/pdf", _htmlToPdf.ReturnNamePdf());                    
         }
     }
 }
