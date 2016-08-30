@@ -7,6 +7,7 @@ using PdfMock;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using PdfModule;
+using System.Net.Http;
 
 namespace WebApp.Controllers
 {
@@ -17,6 +18,9 @@ namespace WebApp.Controllers
         private readonly string _path = @"pdftemp/";
         private string returnedName;
         private PdfCreator<MockModel> _generator;
+        private HtmlToPdfCreator<MockModel> _htmlToPdf;
+        private static string _apiKey = "d4223b69-fe9e-47be-91c5-d973cfdc6ab3";
+        private static string _value = "http://www.google.com";
 
         private readonly IHostingEnvironment _appEnvironment;
 
@@ -79,5 +83,14 @@ namespace WebApp.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult Run()
+        {
+            _htmlToPdf = new HtmlToPdfCreator<MockModel>(_model);
+                        
+            return File(_htmlToPdf.HtmlToPdfByteArray(), "application/pdf", "MyPdfFile.pdf");                    
+        }
     }
 }
+
+
+//System.Collections.Generic.KeyValuePair

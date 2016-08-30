@@ -21,7 +21,7 @@ namespace PdfModule.Test
         [Fact]
         public void Test_HtmlToPdf_String_Must_Be_Equal_GetHtmlToString_Method()
         {
-            _creatorHtmlToPdf = new HtmlToPdfCreator<MockModel>(_modelToTest);
+            _creatorHtmlToPdf = new HtmlToPdfCreator<MockModel>(_modelToTest, "not empty");
             TagBuilder html = new TagBuilder("html");
             _strToTest = "<html></html>";
             string tagToString = _creatorHtmlToPdf.GetHtmlToString(html);

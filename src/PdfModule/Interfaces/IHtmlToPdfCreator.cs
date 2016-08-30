@@ -10,6 +10,8 @@ namespace PdfModule.Interfaces
     public interface IHtmlToPdfCreator<T> where T : class
     {
         void SaveToFolder();
+        string ReturnHtmlContent();
         string GetHtmlToString(IHtmlContent content);
+        string GetHtml5ToString(IHtmlContent content);
     }
 }
